@@ -5,12 +5,29 @@ import sys
 class CPU:
     """Main CPU class."""
 
+    #Step 1: Add the constructor to cpu.py
+    #Add list properties to the CPU class to hold 256 bytes of memory and 8 general-purpose registers.
+    #Also add properties for any internal registers you need, e.g. PC.
+    #Later on, you might do further initialization here, e.g. setting the initial value of the stack pointer.
     def __init__(self):
-        """Construct a new CPU."""
+        """Construct a new CPU.""" 
         self.ram = [0] * 256
         self.register = [0] * 8
         self.pc = 0
         self.halt = False
+
+    
+    # Step 2: Add RAM functions
+    # In CPU, add method ram_read() and ram_write() that access the RAM inside the CPU object.
+    # ram_read() should accept the address to read and return the value stored there.
+    # raw_write() should accept a value to write, and the address to write it to.
+    def ram_read(self, address):
+        return self.ram[address]
+
+    def ram_write(self, address, value):
+        return self.ram[address] = value
+
+
 
     def load(self):
         """Load a program into memory."""
