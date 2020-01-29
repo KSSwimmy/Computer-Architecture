@@ -27,7 +27,24 @@ class CPU:
     def ram_write(self, address, value):
         return self.ram[address] = value
 
+    #Step 4
+    # halt the CPU and exit the emulator
+    def hlt(self, operand_a, operand_b):
+        return (0, False)
+    # load immediate, store a value in a register, or set this register to this value
 
+
+    #Step 5: Add the LDI instruction
+    def ldi(self, operand_a, operand_b):
+        self.reg[operand_a] = operand_b
+        return (3, True)
+
+        
+    #Step 6: Add the PRN instruction
+    # prints the numeric value stored in a register
+    def prn(self, operand_a, operand_b):
+        print(self.reg[operand_a])
+        return (2, True)
 
     def load(self):
         """Load a program into memory."""
@@ -81,5 +98,21 @@ class CPU:
         print()
 
     def run(self):
+        #Step 3: Implement the core of CPU's run() method
         """Run the CPU."""
-        pass
+        running = True
+
+        while running:
+            instruction_register = self.ram_read(self.pc)
+
+            operand_a = self.ram_read(self.pc + 1)
+            operand_b = self.ram_read(self.pc + 2)
+
+            try:
+                operation_op = self.commands[instruction_register](operand_a, operand_b)
+                running = operation_op[1]
+                self.pc += operation_op[0]
+
+            except:
+                print(f"Error: Instruction {instruction_register} not found!")
+                sys.exit(1)
