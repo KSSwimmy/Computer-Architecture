@@ -11,10 +11,19 @@ class CPU:
     #Later on, you might do further initialization here, e.g. setting the initial value of the stack pointer.
     def __init__(self):
         """Construct a new CPU.""" 
+        # 256 bytes of memory
         self.ram = [0] * 256
+        # 8 general-purpose registers
         self.register = [0] * 8
+        # PC
         self.pc = 0
-        self.halt = False
+        # Commands
+        self.commands = {
+            0b00000001: self.hlt,
+            0b10000010: self.ldi,
+            0b01000111: self.prn
+        }
+    # accepts the address in RAM and returns the value stored there
 
     
     # Step 2: Add RAM functions
@@ -39,7 +48,7 @@ class CPU:
         self.reg[operand_a] = operand_b
         return (3, True)
 
-        
+
     #Step 6: Add the PRN instruction
     # prints the numeric value stored in a register
     def prn(self, operand_a, operand_b):
